@@ -99,6 +99,11 @@ public class Photo extends DataObject {
 	 *
 	 */
 	protected Tags tags = Tags.EMPTY_TAGS;
+
+	/**
+	 *
+	 */
+	public Location location = Location.NO_LOCATION;
 	
 	/**
 	 *
