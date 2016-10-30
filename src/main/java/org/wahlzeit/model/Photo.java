@@ -396,6 +396,20 @@ public class Photo extends DataObject {
 	/**
 	 * @methodtype get
 	 */
+	public Location getLocation() {
+		return location;
+	}
+
+	/**
+	 * @methodtype set
+	 */
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	/**
+	 * @methodtype get
+	 */
 	public long getCreationTime() {
 		return creationTime;
 	}
