@@ -20,6 +20,7 @@
 package org.wahlzeit.services.mailing;
 
 import junit.framework.TestCase;
+import org.wahlzeit.main.ServiceMain;
 import org.wahlzeit.services.EmailAddress;
 
 /**
@@ -44,6 +45,7 @@ public class EmailServiceTest extends TestCase {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		ServiceMain.getInstance().setInProduction(false);
 
 		emailService = EmailServiceManager.getDefaultService();
 

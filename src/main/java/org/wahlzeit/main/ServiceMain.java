@@ -223,4 +223,11 @@ public class ServiceMain extends ModelMain {
 		super.shutDown();
 	}
 
+	/**
+	 *
+	 * @param inProduction
+	 */
+	public void setInProduction(boolean inProduction) {
+		isInProduction = inProduction;
+	}
 }
