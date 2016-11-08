@@ -33,7 +33,14 @@ public class Location {
      */
     private Coordinate coordinate;
 
-    /**
+	/**
+	 * @methodtype constructor
+	 */
+	Location() {
+		this(null);
+	}
+
+	/**
      * @methodtype constructor
      */
     public Location(Coordinate coordinate) {

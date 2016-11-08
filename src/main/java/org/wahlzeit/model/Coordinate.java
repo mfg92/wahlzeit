@@ -39,6 +39,13 @@ public class Coordinate {
     private double latitude;
     private double longitude;
 
+	/**
+	 * @methodtype constructor
+	 */
+	Coordinate() {
+		this(0, 0);
+	}
+
     /**
      * @methodtype constructor
      */
