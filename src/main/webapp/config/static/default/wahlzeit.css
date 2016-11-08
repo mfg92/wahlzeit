@@ -1,11 +1,27 @@
+body{
+	background: #232526; /* fallback for old browsers */
+	background: radial-gradient(farthest-corner,#414243, #151617);
+}
+
 body,form,table,td {
 	font-family: verdana, tahoma, arial, helvetica, sans-serif;
 	font-size: 10pt;
+	color: white;
 }
 
 input,textarea {
 	font-family: verdana, tahoma, arial, helvetica, sans-serif;
 	font-size: 9pt;
+	color: white;
+	background: #222
+}
+
+a {
+	color: darkorange;
+}
+
+a:hover {
+	color: gray;
 }
 
 body, table, p {
@@ -23,7 +39,7 @@ h1 {
 	margin-top: 6pt;
 	margin-bottom: 6pt;
 }
-	
+
 h2 {
 	font-size: 12;
 	margin-top: 18pt;
@@ -47,14 +63,14 @@ h3 {
 }
 
 h3.topbox {
-	border: 1px double #99ccff;
-	background: #ddeeff;
+	border: 1px double #444444;
+	background: #222;
 	padding: 4px;
 }
 
 h3.inline {
-	border: 1px double #99ccff;
-	background: #ddeeff;
+	border: 1px double #444444;
+	background: #222;
 	padding: 4px;
 	margin-top: 30pt;
 }
@@ -89,7 +105,7 @@ table.info {
 }
 
 table.border {
-	border: 1px solid #0066cc;
+	border: 1px solid #444444;
 }
 
 table.form {
@@ -110,18 +126,21 @@ td.inline {
 td.spacer {
 	border: 0px;
 	padding: 8px;
-}	
+}
 
 td.side {
-	border: 1px solid #99ccff;
+	/*border: 1px solid #444;*/
 	width: 140px;
 	height: 100%;
 	padding: 8px;
+	background: rgba(0,0,0,0.2);
 }
 
 td.main {
-	border: 1px solid #0066cc;
+	/*border: 1px solid #444;*/
 	padding: 8px;
+	background: rgba(0,0,0,0.2);
+
 }
 
 td.label {
@@ -133,7 +152,7 @@ td.label {
 td.thumb {
 	text-align: center;
 	vertical-align: middle;
-	border: 1px solid #99ccff;
+	border: 1px solid #444;
 	padding: 8px;
 	width: 105px;
 	height: 150px;
@@ -201,4 +220,3 @@ td.fiveCol5 {
 	text-align: left;
 	vertical-align: middle;
 }
-	
