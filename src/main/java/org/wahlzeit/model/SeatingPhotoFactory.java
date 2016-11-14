@@ -20,8 +20,82 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.services.LogBuilder;
+
+import java.util.logging.Logger;
+
 /**
- * A special {@link PhotoFactory} class for photos of Seatings
+ * An Abstract Factory for creating photos and related objects.
  */
-public class SeatingPhotoFactory {
+public class SeatingPhotoFactory extends PhotoFactory{
+
+	private static final Logger log = Logger.getLogger(SeatingPhotoFactory.class.getName());
+	/**
+	 * Hidden singleton instance; needs to be initialized from the outside.
+	 */
+	private static SeatingPhotoFactory instance = null;
+
+
+	/**
+	 * Hidden singleton instance; needs to be initialized from the outside.
+	 */
+	public static void initialize() {
+		getInstance(); // drops result due to getInstance() side-effects
+	}
+
+	/**
+	 * Public singleton access method.
+	 */
+	public static synchronized SeatingPhotoFactory getInstance() {
+		if (instance == null) {
+			log.config(LogBuilder.createSystemMessage().addAction("setting generic SeatingPhotoFactory").toString());
+			setInstance(new SeatingPhotoFactory());
+		}
+
+		return instance;
+	}
+
+	/**
+	 * Method to set the singleton instance of PhotoFactory.
+	 */
+	protected static synchronized void setInstance(SeatingPhotoFactory photoFactory) {
+		if (instance != null) {
+			throw new IllegalStateException("attempt to initalize PhotoFactory twice");
+		}
+
+		instance = photoFactory;
+	}
+
+	/**
+	 * @methodtype factory
+	 */
+	@Override
+	public SeatingPhoto createPhoto() {
+		return new SeatingPhoto();
+	}
+
+	/**
+	 * Creates a new photo with the specified id
+	 */
+	@Override
+	public SeatingPhoto createPhoto(PhotoId id) {
+		return new SeatingPhoto(id);
+	}
+
+	/**
+	 * Loads a photo. The Java object is loaded from the Google Datastore, the Images in all sizes are loaded from the
+	 * Google Cloud storage.
+	 */
+	@Override
+	public SeatingPhoto loadPhoto(PhotoId id) {
+	   /* Photo result =
+                OfyService.ofy().load().type(Photo.class).ancestor(KeyFactory.createKey("Application", "Wahlzeit")).filter(Photo.ID, id).first().now();
+        for (PhotoSize size : PhotoSize.values()) {
+            GcsFilename gcsFilename = new GcsFilename("picturebucket", filename);
+
+
+
+        }*/
+		return null;
+	}
 }

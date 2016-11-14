@@ -21,7 +21,33 @@
 package org.wahlzeit.model;
 
 /**
- * A special {@link PhotoManager} class for photos of Seatings
+ * A photo manager provides access to and manages photos.
  */
-public class SeatingPhotoManager {
+public class SeatingPhotoManager extends PhotoManager {
+
+	/**
+	 *
+	 */
+	protected static final SeatingPhotoManager instance = new SeatingPhotoManager();
+
+	/**
+	 *
+	 */
+	public static PhotoManager getInstance() {
+		return instance;
+	}
+
+	/**
+	 *
+	 */
+	public SeatingPhotoManager() {
+		super(SeatingPhotoFactory.getInstance().createPhotoTagCollector());
+	}
+
+
+	@Override
+	protected Photo doLoadPhoto(PhotoId id) {
+		return SeatingPhotoFactory.getInstance().loadPhoto(id);
+	}
+
 }

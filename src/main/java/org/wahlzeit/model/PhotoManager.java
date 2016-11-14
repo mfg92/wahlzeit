@@ -43,12 +43,7 @@ import java.util.logging.Logger;
 /**
  * A photo manager provides access to and manages photos.
  */
-public class PhotoManager extends ObjectManager {
-
-	/**
-	 *
-	 */
-	protected static final PhotoManager instance = new PhotoManager();
+public abstract class PhotoManager extends ObjectManager {
 
 	private static final Logger log = Logger.getLogger(PhotoManager.class.getName());
 
@@ -60,21 +55,23 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 *
 	 */
-	protected PhotoTagCollector photoTagCollector = null;
+	protected final PhotoTagCollector photoTagCollector;
 
 	/**
 	 *
 	 */
-	public PhotoManager() {
-		photoTagCollector = PhotoFactory.getInstance().createPhotoTagCollector();
+	public static PhotoManager getInstance() {
+		return SeatingPhotoManager.getInstance();
 	}
 
 	/**
 	 *
+	 * @param photoTagCollector
 	 */
-	public static final PhotoManager getInstance() {
-		return instance;
+	protected PhotoManager(PhotoTagCollector photoTagCollector) {
+		this.photoTagCollector = photoTagCollector;
 	}
+
 
 	/**
 	 *
@@ -94,13 +91,13 @@ public class PhotoManager extends ObjectManager {
 	 *
 	 */
 	public final Photo getPhoto(PhotoId id) {
-		return instance.getPhotoFromId(id);
+		return getPhotoFromId(id);
 	}
 
 	/**
 	 *
 	 */
-	public Photo getPhotoFromId(PhotoId id) {
+	public final Photo getPhotoFromId(PhotoId id) {
 		if (id == null) {
 			return null;
 		}
@@ -108,7 +105,7 @@ public class PhotoManager extends ObjectManager {
 		Photo result = doGetPhotoFromId(id);
 
 		if (result == null) {
-			result = PhotoFactory.getInstance().loadPhoto(id);
+			result = doLoadPhoto(id);
 			if (result != null) {
 				doAddPhoto(result);
 			}
@@ -124,6 +121,8 @@ public class PhotoManager extends ObjectManager {
 	protected Photo doGetPhotoFromId(PhotoId id) {
 		return photoCache.get(id);
 	}
+
+	protected abstract Photo doLoadPhoto(PhotoId id);
 
 	/**
 	 * @methodtype command
