@@ -20,9 +20,12 @@
 
 package org.wahlzeit.model;
 
+import com.googlecode.objectify.annotation.Subclass;
+
 /**
  * A special {@link Photo} class for photos of Seatings
  */
+@Subclass
 public class SeatingPhoto extends Photo {
 	public static final int UNKNOWN_SEAT_COUNT = -1;
 	/**
