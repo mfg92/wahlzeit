@@ -20,30 +20,32 @@
 
 package org.wahlzeit.model;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.wahlzeit.model.persistence.PersistenceTestSuite;
-
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        PersistenceTestSuite.class,
-        AccessRightsTest.class,
-        CoordinateTest.class,
-        FlagReasonTest.class,
-        GenderTest.class,
-        GuestTest.class,
-        PhotoFilterTest.class,
-		SeatingPhotoFactoryTest.class,
-		SeatingPhotoManagerTest.class,
-		SeatingPhotoTest.class,
-        TagsTest.class,
-        UserStatusTest.class,
-        ValueTest.class
-})
-
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
- *
+ * Test cases for the SeatingPhotoFactory class.
  */
-public class ModelTestSuite {
+public class SeatingPhotoFactoryTest {
+
+	private SeatingPhotoFactory factory = new SeatingPhotoFactory();
+
+	@Test
+	public void testSigelton(){
+		Assert.assertNotNull(SeatingPhotoFactory.getInstance());
+	}
+
+	@Test
+	public void testCreatePhoto(){
+		Assert.assertNotNull(factory.createPhoto());
+	}
+
+	@Test
+	public void testCreatePhotoFilter(){
+		Assert.assertNotNull(factory.createPhotoFilter());
+	}
+	@Test
+	public void testCreatePhotoTagCollector(){
+		Assert.assertNotNull(factory.createPhotoTagCollector());
+	}
 }

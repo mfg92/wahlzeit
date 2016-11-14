@@ -20,30 +20,48 @@
 
 package org.wahlzeit.model;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.wahlzeit.model.persistence.PersistenceTestSuite;
-
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        PersistenceTestSuite.class,
-        AccessRightsTest.class,
-        CoordinateTest.class,
-        FlagReasonTest.class,
-        GenderTest.class,
-        GuestTest.class,
-        PhotoFilterTest.class,
-		SeatingPhotoFactoryTest.class,
-		SeatingPhotoManagerTest.class,
-		SeatingPhotoTest.class,
-        TagsTest.class,
-        UserStatusTest.class,
-        ValueTest.class
-})
-
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
- *
+ * Test cases for the SeatingPhoto class.
  */
-public class ModelTestSuite {
+public class SeatingPhotoTest {
+
+	/**
+	 *
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testSeatsCountSetterIllegalArgument() {
+		SeatingPhoto photo = new SeatingPhoto();
+		photo.setSeatCount(-42);
+	}
+
+	/**
+	 *
+	 */
+    @Test
+    public void testSeatsCountSetterGetter() {
+		int seatCount = 42;
+		SeatingPhoto photo = new SeatingPhoto();
+		photo.setSeatCount(seatCount);
+		Assert.assertEquals(seatCount, photo.getSeatCount());
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testConstructor() {
+        new Photo();
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testConstructor2() {
+        new Photo(PhotoId.NULL_ID);
+    }
+
 }
