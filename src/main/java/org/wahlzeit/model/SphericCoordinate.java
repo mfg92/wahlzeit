@@ -27,7 +27,7 @@ package org.wahlzeit.model;
  */
 public class SphericCoordinate implements Coordinate{
 
-    /**
+	/**
      *  Radius of the earth in meters
      */
     public static final double EARTH_RADIUS = 6_371_000D;

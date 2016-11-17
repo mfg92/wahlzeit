@@ -33,19 +33,27 @@ public class SphericCoordinateTest {
      */
     private static final double EARTH_PERIMETER = 2.0D * Math.PI * SphericCoordinate.EARTH_RADIUS;
 
+	Coordinate northPole = new SphericCoordinate(90D, 0D);
+	Coordinate southPole = new SphericCoordinate(-90D, 0D);
+	Coordinate zero = new SphericCoordinate(0D, 0D);
+	Coordinate fullEast = new SphericCoordinate(0D, 180D);
+	Coordinate fullWest = new SphericCoordinate(0D, 180D);
+
     @Test
     public void testDistance() {
-        Coordinate northPole = new SphericCoordinate(90D, 0D);
-        Coordinate southPole = new SphericCoordinate(-90D, 0D);
-        Coordinate zero = new SphericCoordinate(0D, 0D);
-        Coordinate fullEast = new SphericCoordinate(0D, 180D);
-        Coordinate fullWest = new SphericCoordinate(0D, 180D);
-
         Assert.assertEquals(0.5D * EARTH_PERIMETER, northPole.getDistance(southPole), 1.0D);
         Assert.assertEquals(0D, northPole.getDistance(northPole), 1.0D);
         Assert.assertEquals(0D, northPole.getDistance(new SphericCoordinate(90D, 42D)), 1.0D);
         Assert.assertEquals(0.5D * EARTH_PERIMETER, zero.getDistance(new SphericCoordinate(0D, 180D)), 1.0D);
         Assert.assertEquals(0.0D, fullEast.getDistance(fullWest), 1.0D);
+    }
+
+    /**
+     *
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testInteroperability(){
+        zero.getDistance(new CartesianCoordinate(0.0D, 0.0D, 0.0D));
     }
 
     /**
