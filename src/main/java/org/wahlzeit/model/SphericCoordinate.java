@@ -92,10 +92,17 @@ public class SphericCoordinate implements Coordinate{
      * @return The ditance between this coordinate and the given one in meters
      */
     public double getDistance(Coordinate otherCoordinate) {
-        if(otherCoordinate instanceof SphericCoordinate){
-            return doGetDistance((SphericCoordinate) otherCoordinate);
-        }
-        throw new IllegalArgumentException("Can only compare Coordinates of same type");
+        if( !(otherCoordinate instanceof SphericCoordinate)) {
+			throw new IllegalArgumentException("Can only compare Coordinates of same type");
+		}
+
+		SphericCoordinate other = (SphericCoordinate) otherCoordinate;
+
+		if( other.radius != radius){
+			throw new IllegalArgumentException("Can only compare SphericCoordinates that share the same radius");
+		}
+		
+		return doGetDistance(other);
     }
 
     /**
@@ -117,7 +124,7 @@ public class SphericCoordinate implements Coordinate{
                 Math.sin(phi1) * Math.sin(phi2)
                 + Math.cos(phi1) * Math.cos(phi2) * Math.cos(deltaLambda)
         );
-        return EARTH_RADIUS * centralAngle;
+        return radius * centralAngle;
     }
 
     /**
