@@ -26,25 +26,25 @@ import org.junit.Test;
 /**
  * Test cases for the Coordinate class.
  */
-public class CoordinateTest {
+public class SphericCoordinateTest {
 
     /**
      *
      */
-    private static final double EARTH_PERIMETER = 2.0D * Math.PI * Coordinate.EARTH_RADIUS;
+    private static final double EARTH_PERIMETER = 2.0D * Math.PI * SphericCoordinate.EARTH_RADIUS;
 
     @Test
     public void testDistance() {
-        Coordinate northPole = new Coordinate(90D, 0D);
-        Coordinate southPole = new Coordinate(-90D, 0D);
-        Coordinate zero = new Coordinate(0D, 0D);
-        Coordinate fullEast = new Coordinate(0D, 180D);
-        Coordinate fullWest = new Coordinate(0D, 180D);
+        Coordinate northPole = new SphericCoordinate(90D, 0D);
+        Coordinate southPole = new SphericCoordinate(-90D, 0D);
+        Coordinate zero = new SphericCoordinate(0D, 0D);
+        Coordinate fullEast = new SphericCoordinate(0D, 180D);
+        Coordinate fullWest = new SphericCoordinate(0D, 180D);
 
         Assert.assertEquals(0.5D * EARTH_PERIMETER, northPole.getDistance(southPole), 1.0D);
         Assert.assertEquals(0D, northPole.getDistance(northPole), 1.0D);
-        Assert.assertEquals(0D, northPole.getDistance(new Coordinate(90D, 42D)), 1.0D);
-        Assert.assertEquals(0.5D * EARTH_PERIMETER, zero.getDistance(new Coordinate(0D, 180D)), 1.0D);
+        Assert.assertEquals(0D, northPole.getDistance(new SphericCoordinate(90D, 42D)), 1.0D);
+        Assert.assertEquals(0.5D * EARTH_PERIMETER, zero.getDistance(new SphericCoordinate(0D, 180D)), 1.0D);
         Assert.assertEquals(0.0D, fullEast.getDistance(fullWest), 1.0D);
     }
 
@@ -53,7 +53,7 @@ public class CoordinateTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor() {
-        new Coordinate(-91.0D, 0D);
+        new SphericCoordinate(-91.0D, 0D);
     }
 
     /**
@@ -61,6 +61,14 @@ public class CoordinateTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor2() {
-        new Coordinate(0.0D, 180.1D);
+        new SphericCoordinate(0.0D, 180.1D);
+    }
+
+    /**
+     *
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructor3() {
+        new SphericCoordinate(0.0D, 0.0D, 0);
     }
 }
