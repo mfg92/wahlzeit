@@ -33,5 +33,4 @@ public interface Coordinate {
      * @return The distance between this coordinate and the given one in meters
      */
     double getDistance(Coordinate otherCoordinate);
-
 }

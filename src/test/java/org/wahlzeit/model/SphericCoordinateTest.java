@@ -48,6 +48,11 @@ public class SphericCoordinateTest {
         Assert.assertEquals(0.0D, fullEast.getDistance(fullWest), 1.0D);
     }
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testDistanceWithDifferentRadius() {
+		zero.getDistance(new SphericCoordinate(0.0D, 0.0D, 42.0D));
+	}
+
     /**
      *
      */

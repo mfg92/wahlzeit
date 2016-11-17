@@ -68,6 +68,7 @@ public class SphericCoordinate implements Coordinate{
 		if(!checkArguments(latitude, longitude, radius)) {
 			throw new IllegalArgumentException("Arguments are out of range: latitude [-90,90], longitude [-180, 180], radius (0, Double.MAX)");
 		}
+
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radius = radius;
@@ -101,7 +102,7 @@ public class SphericCoordinate implements Coordinate{
 		if( other.radius != radius){
 			throw new IllegalArgumentException("Can only compare SphericCoordinates that share the same radius");
 		}
-		
+
 		return doGetDistance(other);
     }
 
