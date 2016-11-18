@@ -23,6 +23,14 @@ public class CartesianCoordinateTest {
 
 	/**
 	 *
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testDistanceNull() {
+		doTestDistance(zero, null, 0.0D);
+	}
+
+	/**
+	 *
 	 * @param a
 	 * @param b
 	 * @param expected
@@ -43,8 +51,20 @@ public class CartesianCoordinateTest {
 	/**
 	 *
 	 */
+	@Test()
+	public void testConstructor0() {
+		double x = 1.0D, y = 2.0D, z = 3.0D;
+		CartesianCoordinate sc = new CartesianCoordinate(x, y, z);
+		Assert.assertEquals(x, sc.getX(), 0.0D);
+		Assert.assertEquals(y, sc.getY(), 0.0D);
+		Assert.assertEquals(z, sc.getZ(), 0.0D);
+	}
+
+	/**
+	 *
+	 */
 	@Test
-	public void testConstructor() {
+	public void testConstructor1() {
 		new CartesianCoordinate(0.0D, 0.0D, 0.0D);
 	}
 }

@@ -22,6 +22,7 @@ package org.wahlzeit.model;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * Test cases for the Coordinate class.
@@ -33,12 +34,15 @@ public class SphericCoordinateTest {
      */
     private static final double EARTH_PERIMETER = 2.0D * Math.PI * SphericCoordinate.EARTH_RADIUS;
 
-	Coordinate northPole = new SphericCoordinate(90D, 0D);
-	Coordinate southPole = new SphericCoordinate(-90D, 0D);
-	Coordinate zero = new SphericCoordinate(0D, 0D);
-	Coordinate fullEast = new SphericCoordinate(0D, 180D);
-	Coordinate fullWest = new SphericCoordinate(0D, 180D);
+	SphericCoordinate northPole = new SphericCoordinate(90D, 0D);
+	SphericCoordinate southPole = new SphericCoordinate(-90D, 0D);
+	SphericCoordinate zero = new SphericCoordinate(0D, 0D);
+	SphericCoordinate fullEast = new SphericCoordinate(0D, 180D);
+	SphericCoordinate fullWest = new SphericCoordinate(0D, 180D);
 
+	/**
+	 *
+	 */
     @Test
     public void testDistance() {
         Assert.assertEquals(0.5D * EARTH_PERIMETER, northPole.getDistance(southPole), 1.0D);
@@ -48,9 +52,20 @@ public class SphericCoordinateTest {
         Assert.assertEquals(0.0D, fullEast.getDistance(fullWest), 1.0D);
     }
 
+	/**
+	 *
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testDistanceWithDifferentRadius() {
-		zero.getDistance(new SphericCoordinate(0.0D, 0.0D, 42.0D));
+		zero.getDistance(new SphericCoordinate(0.0D, 0.0D, zero.getRadius() + 42.0D));
+	}
+
+	/**
+	 *
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testDistanceNull() {
+		zero.getDistance(null);
 	}
 
     /**
@@ -61,11 +76,23 @@ public class SphericCoordinateTest {
         zero.getDistance(new CartesianCoordinate(0.0D, 0.0D, 0.0D));
     }
 
-    /**
+	/**
+	 *
+	 */
+	@Test()
+	public void testConstructor0() {
+		double lat = 1.0D, lon = 2.0D, rad = 3.0D;
+		SphericCoordinate sc = new SphericCoordinate(lat, lon, rad);
+		Assert.assertEquals(lat, sc.getLatitude(), 0.0D);
+		Assert.assertEquals(lon, sc.getLongitude(), 0.0D);
+		Assert.assertEquals(rad, sc.getRadius(), 0.0D);
+	}
+
+	/**
      *
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testConstructor() {
+    public void testConstructor1() {
         new SphericCoordinate(-91.0D, 0D);
     }
 
