@@ -20,6 +20,8 @@
 
 package org.wahlzeit.model;
 
+import java.util.Objects;
+
 /**
  * A coordinate class for cartesian coordinates
  */
@@ -35,39 +37,84 @@ public class CartesianCoordinate implements Coordinate {
 
 
 	/**
-	 *
 	 * @param otherCoordinate
 	 * @return
 	 */
 	@Override
 	public double getDistance(Coordinate otherCoordinate) {
-		if(otherCoordinate instanceof CartesianCoordinate){
-			return doGetDistance((CartesianCoordinate) otherCoordinate);
+		Objects.requireNonNull(otherCoordinate, "Coordinate parameter must not be null.");
+
+		if (!(otherCoordinate instanceof CartesianCoordinate)) {
+			throw new IllegalArgumentException("Can only get distance of Coordinates of same type");
 		}
-		throw new IllegalArgumentException("Can only compare Coordinates of same type");
+
+		return doGetDistance((CartesianCoordinate) otherCoordinate);
 	}
 
 	/**
-	 *
 	 * @param other
 	 * @return
 	 */
-	private double doGetDistance(CartesianCoordinate other){
+	private double doGetDistance(CartesianCoordinate other) {
 		double dx = x - other.x;
 		double dy = y - other.y;
 		double dz = z - other.z;
-		return Math.sqrt(dx*dx + dy*dy + dz*dz);
+		return Math.sqrt(dx * dx + dy * dy + dz * dz);
 	}
 
+	/**
+	 * @methodtype get
+	 */
 	public double getX() {
 		return x;
 	}
 
+	/**
+	 * @methodtype get
+	 */
 	public double getY() {
 		return y;
 	}
 
+	/**
+	 * @methodtype get
+	 */
 	public double getZ() {
 		return z;
+	}
+
+	/**
+	 *
+	 * @param o
+	 * @return
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof CartesianCoordinate)) return false;
+
+		CartesianCoordinate that = (CartesianCoordinate) o;
+
+		if (Double.compare(that.x, x) != 0) return false;
+		if (Double.compare(that.y, y) != 0) return false;
+		return Double.compare(that.z, z) == 0;
+
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	@Override
+	public int hashCode() {
+		int result;
+		long temp;
+		temp = Double.doubleToLongBits(x);
+		result = (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(y);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(z);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		return result;
 	}
 }

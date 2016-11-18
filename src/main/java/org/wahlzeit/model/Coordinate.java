@@ -20,17 +20,17 @@
 
 package org.wahlzeit.model;
 
-
-
 /**
  * An interface for coordinates.
  */
 public interface Coordinate {
 
 
-    /**
-     * Calculates the distance between two coordinates
-     * @return The distance between this coordinate and the given one in meters
-     */
-    double getDistance(Coordinate otherCoordinate);
+	/**
+	 * Calculates the distance between two coordinates
+	 *
+	 * @return The distance between this coordinate and the given one in meters
+	 * @throws IllegalArgumentException if {@code otherCoordinate} is not of same type
+	 */
+	double getDistance(Coordinate otherCoordinate);
 }

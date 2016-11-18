@@ -21,24 +21,25 @@
 package org.wahlzeit.model;
 
 
+import java.util.Objects;
 
 /**
  * A class that represents a polar coordinate on the earth.
  */
-public class SphericCoordinate implements Coordinate{
+public class SphericCoordinate implements Coordinate {
 
 	/**
-     *  Radius of the earth in meters
-     */
-    public static final double EARTH_RADIUS = 6_371_000D;
+	 * Radius of the earth in meters
+	 */
+	public static final double EARTH_RADIUS = 6_371_000D;
 
-    /**
-     * Latitude in degrees, range [-90,90]
-     * Longitude in degrees, range [-180, 180]
-     */
-    private final double latitude;
-    private final double longitude;
-    private final double radius;
+	/**
+	 * Latitude in degrees, range [-90,90]
+	 * Longitude in degrees, range [-180, 180]
+	 */
+	private final double latitude;
+	private final double longitude;
+	private final double radius;
 
 	/**
 	 * @methodtype constructor
@@ -47,25 +48,25 @@ public class SphericCoordinate implements Coordinate{
 		this(0, 0);
 	}
 
-    /**
-	 * Sets the radius to the radius of the earth
-	 * @param latitude
-	 * @param longitude
-     * @methodtype constructor
-     */
-    public SphericCoordinate(double latitude, double longitude) {
-		this(latitude, longitude, EARTH_RADIUS);
-    }
-
 	/**
+	 * Sets the radius to the radius of the earth
 	 *
 	 * @param latitude
 	 * @param longitude
-	 * @param radius in meters
+	 * @methodtype constructor
+	 */
+	public SphericCoordinate(double latitude, double longitude) {
+		this(latitude, longitude, EARTH_RADIUS);
+	}
+
+	/**
+	 * @param latitude
+	 * @param longitude
+	 * @param radius    in meters
 	 * @methodtype constructor
 	 */
 	public SphericCoordinate(double latitude, double longitude, double radius) {
-		if(!checkArguments(latitude, longitude, radius)) {
+		if (!checkArguments(latitude, longitude, radius)) {
 			throw new IllegalArgumentException("Arguments are out of range: latitude [-90,90], longitude [-180, 180], radius (0, Double.MAX)");
 		}
 
@@ -74,103 +75,115 @@ public class SphericCoordinate implements Coordinate{
 		this.radius = radius;
 	}
 
-    /**
-     *
-     * @param latitude
-     * @param longitude
-     * @return true if arguments are in valid range
-     */
-    private boolean checkArguments(double latitude, double longitude, double radius) {
-        return latitude <= 90.0D && latitude >= -90.0D
-                && longitude <= 180.0D && longitude >= -180.0D
+	/**
+	 * @param latitude
+	 * @param longitude
+	 * @return true if arguments are in valid range
+	 */
+	private boolean checkArguments(double latitude, double longitude, double radius) {
+		return latitude <= 90.0D && latitude >= -90.0D
+				&& longitude <= 180.0D && longitude >= -180.0D
 				&& radius > 0.0D;
-    }
+	}
 
-    /**
-     * Calculates the distance between two coordinates on earth
-     * https://en.wikipedia.org/wiki/Great-circle_distance
-     * @methodtype int-query
-     * @return The ditance between this coordinate and the given one in meters
-     */
-    public double getDistance(Coordinate otherCoordinate) {
-        if( !(otherCoordinate instanceof SphericCoordinate)) {
-			throw new IllegalArgumentException("Can only compare Coordinates of same type");
+	/**
+	 * Calculates the distance between two coordinates on earth
+	 * https://en.wikipedia.org/wiki/Great-circle_distance
+	 *
+	 * @return The distance between this coordinate and the given one in meters
+	 * @methodtype int-query
+	 */
+	public double getDistance(Coordinate otherCoordinate) {
+		Objects.requireNonNull(otherCoordinate, "Coordinate parameter must not be null.");
+
+		if (!(otherCoordinate instanceof SphericCoordinate)) {
+			throw new IllegalArgumentException("Can only get distance of Coordinates of same type");
 		}
 
 		SphericCoordinate other = (SphericCoordinate) otherCoordinate;
 
-		if( other.radius != radius){
+		if (other.radius != radius) {
 			throw new IllegalArgumentException("Can only compare SphericCoordinates that share the same radius");
 		}
 
 		return doGetDistance(other);
-    }
+	}
 
-    /**
-     *
-     * @param otherCoordinate
-     * @return
-     * @methodtype double-query
-     */
-    public double doGetDistance(SphericCoordinate otherCoordinate) {
-        // make degrees to radians
-        double phi1 = Math.toRadians(latitude);
-        double phi2 = Math.toRadians(otherCoordinate.latitude);
-        double lambda1 = Math.toRadians(longitude);
-        double lambda2 = Math.toRadians(otherCoordinate.longitude);
+	/**
+	 * @param otherCoordinate
+	 * @return
+	 * @methodtype double-query
+	 */
+	public double doGetDistance(SphericCoordinate otherCoordinate) {
+		// make degrees to radians
+		double phi1 = Math.toRadians(latitude);
+		double phi2 = Math.toRadians(otherCoordinate.latitude);
+		double lambda1 = Math.toRadians(longitude);
+		double lambda2 = Math.toRadians(otherCoordinate.longitude);
 
-        // compute central angle
-        double deltaLambda = Math.abs(lambda1 - lambda2);
-        double centralAngle = Math.acos(
-                Math.sin(phi1) * Math.sin(phi2)
-                + Math.cos(phi1) * Math.cos(phi2) * Math.cos(deltaLambda)
-        );
-        return radius * centralAngle;
-    }
+		// compute central angle
+		double deltaLambda = Math.abs(lambda1 - lambda2);
+		double centralAngle = Math.acos(
+				Math.sin(phi1) * Math.sin(phi2)
+						+ Math.cos(phi1) * Math.cos(phi2) * Math.cos(deltaLambda)
+		);
+		return radius * centralAngle;
+	}
 
-    /**
-     * @methodtype set
-     */
-    public double getLatitude() {
-        return latitude;
-    }
+	/**
+	 * @methodtype get
+	 */
+	public double getLatitude() {
+		return latitude;
+	}
 
-    /**
-     * @methodtype get
-     */
-    public double getLongitude() {
-        return longitude;
-    }
+	/**
+	 * @methodtype get
+	 */
+	public double getLongitude() {
+		return longitude;
+	}
 
-    /**
-     *
-     * @param o
-     * @return
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof SphericCoordinate)) return false;
+	/**
+	 * @methodtype get
+	 */
+	public double getRadius() {
+		return radius;
+	}
 
-        SphericCoordinate that = (SphericCoordinate) o;
 
-        if (Double.compare(that.latitude, latitude) != 0) return false;
-        return Double.compare(that.longitude, longitude) == 0;
+	/**
+	 *
+	 * @param o
+	 * @return
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof SphericCoordinate)) return false;
 
-    }
+		SphericCoordinate that = (SphericCoordinate) o;
 
-    /**
-     *
-     * @return
-     */
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        temp = Double.doubleToLongBits(latitude);
-        result = (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(longitude);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
-    }
+		if (Double.compare(that.latitude, latitude) != 0) return false;
+		if (Double.compare(that.longitude, longitude) != 0) return false;
+		return Double.compare(that.radius, radius) == 0;
+
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	@Override
+	public int hashCode() {
+		int result;
+		long temp;
+		temp = Double.doubleToLongBits(latitude);
+		result = (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(longitude);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(radius);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
 }
