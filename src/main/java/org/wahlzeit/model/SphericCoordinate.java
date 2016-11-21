@@ -21,12 +21,10 @@
 package org.wahlzeit.model;
 
 
-import java.util.Objects;
-
 /**
  * A class that represents a polar coordinate on the earth.
  */
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends AbstractCoordinate {
 
 	/**
 	 * Radius of the earth in meters
@@ -79,55 +77,12 @@ public class SphericCoordinate implements Coordinate {
 	 * @param latitude
 	 * @param longitude
 	 * @return true if arguments are in valid range
+	 * @mthodtype helper
 	 */
 	private boolean checkArguments(double latitude, double longitude, double radius) {
 		return latitude <= 90.0D && latitude >= -90.0D
 				&& longitude <= 180.0D && longitude >= -180.0D
 				&& radius > 0.0D;
-	}
-
-	/**
-	 * Calculates the distance between two coordinates on earth
-	 * https://en.wikipedia.org/wiki/Great-circle_distance
-	 *
-	 * @return The distance between this coordinate and the given one in meters
-	 * @methodtype int-query
-	 */
-	public double getDistance(Coordinate otherCoordinate) {
-		Objects.requireNonNull(otherCoordinate, "Coordinate parameter must not be null.");
-
-		if (!(otherCoordinate instanceof SphericCoordinate)) {
-			throw new IllegalArgumentException("Can only get distance of Coordinates of same type");
-		}
-
-		SphericCoordinate other = (SphericCoordinate) otherCoordinate;
-
-		if (other.radius != radius) {
-			throw new IllegalArgumentException("Can only compare SphericCoordinates that share the same radius");
-		}
-
-		return doGetDistance(other);
-	}
-
-	/**
-	 * @param otherCoordinate
-	 * @return
-	 * @methodtype double-query
-	 */
-	public double doGetDistance(SphericCoordinate otherCoordinate) {
-		// make degrees to radians
-		double phi1 = Math.toRadians(latitude);
-		double phi2 = Math.toRadians(otherCoordinate.latitude);
-		double lambda1 = Math.toRadians(longitude);
-		double lambda2 = Math.toRadians(otherCoordinate.longitude);
-
-		// compute central angle
-		double deltaLambda = Math.abs(lambda1 - lambda2);
-		double centralAngle = Math.acos(
-				Math.sin(phi1) * Math.sin(phi2)
-						+ Math.cos(phi1) * Math.cos(phi2) * Math.cos(deltaLambda)
-		);
-		return radius * centralAngle;
 	}
 
 	/**
@@ -151,9 +106,31 @@ public class SphericCoordinate implements Coordinate {
 		return radius;
 	}
 
+	/**
+	 * @methodtype get
+	 */
+	@Override
+	public double getX() {
+		return radius * Math.cos(Math.toRadians(latitude)) * Math.cos(Math.toRadians(longitude));
+	}
 
 	/**
-	 *
+	 * @methodtype get
+	 */
+	@Override
+	public double getY() {
+		return radius * Math.cos(Math.toRadians(latitude)) * Math.sin(Math.toRadians(longitude));
+	}
+
+	/**
+	 * @methodtype get
+	 */
+	@Override
+	public double getZ() {
+		return radius * Math.sin(Math.toRadians(latitude));
+	}
+
+	/**
 	 * @param o
 	 * @return
 	 */
@@ -171,7 +148,6 @@ public class SphericCoordinate implements Coordinate {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	@Override

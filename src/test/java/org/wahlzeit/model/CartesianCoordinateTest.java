@@ -30,12 +30,11 @@ public class CartesianCoordinateTest {
 	}
 
 	/**
-	 *
 	 * @param a
 	 * @param b
 	 * @param expected
 	 */
-	private void doTestDistance(Coordinate a, Coordinate b, double expected){
+	private void doTestDistance(Coordinate a, Coordinate b, double expected) {
 		Assert.assertEquals(expected, a.getDistance(b), 0.0001D);
 		Assert.assertEquals(b.getDistance(a), a.getDistance(b), 0.0001D);
 	}
@@ -43,9 +42,10 @@ public class CartesianCoordinateTest {
 	/**
 	 *
 	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testInteroperability(){
-		zero.getDistance(new SphericCoordinate(0.0D, 0.0D));
+	@Test()
+	public void testInteroperability() {
+		double radius = 100.0;
+		Assert.assertEquals(radius, zero.getDistance(new SphericCoordinate(0.0D, 0.0D, radius)), 0.1);
 	}
 
 	/**

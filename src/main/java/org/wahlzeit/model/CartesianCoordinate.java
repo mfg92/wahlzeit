@@ -20,51 +20,29 @@
 
 package org.wahlzeit.model;
 
-import java.util.Objects;
-
 /**
  * A coordinate class for cartesian coordinates
  */
-public class CartesianCoordinate implements Coordinate {
+public class CartesianCoordinate extends AbstractCoordinate {
 
 	private final double x, y, z;
 
+	/**
+	 *
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
 	public CartesianCoordinate(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
-
-	/**
-	 * @param otherCoordinate
-	 * @return
-	 */
-	@Override
-	public double getDistance(Coordinate otherCoordinate) {
-		Objects.requireNonNull(otherCoordinate, "Coordinate parameter must not be null.");
-
-		if (!(otherCoordinate instanceof CartesianCoordinate)) {
-			throw new IllegalArgumentException("Can only get distance of Coordinates of same type");
-		}
-
-		return doGetDistance((CartesianCoordinate) otherCoordinate);
-	}
-
-	/**
-	 * @param other
-	 * @return
-	 */
-	private double doGetDistance(CartesianCoordinate other) {
-		double dx = x - other.x;
-		double dy = y - other.y;
-		double dz = z - other.z;
-		return Math.sqrt(dx * dx + dy * dy + dz * dz);
-	}
-
 	/**
 	 * @methodtype get
 	 */
+	@Override
 	public double getX() {
 		return x;
 	}
@@ -72,6 +50,7 @@ public class CartesianCoordinate implements Coordinate {
 	/**
 	 * @methodtype get
 	 */
+	@Override
 	public double getY() {
 		return y;
 	}
@@ -79,12 +58,12 @@ public class CartesianCoordinate implements Coordinate {
 	/**
 	 * @methodtype get
 	 */
+	@Override
 	public double getZ() {
 		return z;
 	}
 
 	/**
-	 *
 	 * @param o
 	 * @return
 	 */
@@ -102,7 +81,6 @@ public class CartesianCoordinate implements Coordinate {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	@Override
