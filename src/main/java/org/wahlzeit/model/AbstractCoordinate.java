@@ -35,12 +35,16 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public double getDistance(Coordinate otherCoordinate) {
-		Objects.requireNonNull(otherCoordinate, "Coordinate parameter must not be null.");
+		assert otherCoordinate != null;
 
 		if (!(otherCoordinate instanceof AbstractCoordinate)) {
 			throw new IllegalArgumentException("Can only calculate distance for AbstractCoordinate classes");
 		}
-		return doGetDistance((AbstractCoordinate) otherCoordinate);
+
+		double result = doGetDistance((AbstractCoordinate) otherCoordinate);
+
+		assert result >= 0.0;
+		return result;
 	}
 
 	/**
@@ -50,23 +54,31 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * @methodtype get
 	 */
 	private double doGetDistance(AbstractCoordinate other) {
+		assert other != null;
+
 		double dx = getX() - other.getX();
 		double dy = getY() - other.getY();
 		double dz = getZ() - other.getZ();
-		return Math.sqrt(dx * dx + dy * dy + dz * dz);
+		double result = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+		assert result >= 0.0;
+		return result;
 	}
 
 	/**
+	 * in meters
 	 * @methodtype get
 	 */
 	public abstract double getX();
 
 	/**
+	 * in meters
 	 * @methodtype get
 	 */
 	public abstract double getY();
 
 	/**
+	 * in meters
 	 * @methodtype get
 	 */
 	public abstract double getZ();

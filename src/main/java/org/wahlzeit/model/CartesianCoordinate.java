@@ -25,6 +25,9 @@ package org.wahlzeit.model;
  */
 public class CartesianCoordinate extends AbstractCoordinate {
 
+	/**
+	 * in meters
+	 */
 	private final double x, y, z;
 
 	/**
@@ -37,7 +40,16 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+
+		assert this.x == x;
+		assert this.y == y;
+		assert this.z == z;
 	}
+
+//	no assertClassInvariants needed because all fields are final
+//	private void assertClassInvariants(){
+//
+//	}
 
 	/**
 	 * @methodtype get
