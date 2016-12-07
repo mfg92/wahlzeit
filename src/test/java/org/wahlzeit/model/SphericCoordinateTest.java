@@ -66,7 +66,7 @@ public class SphericCoordinateTest {
 	/**
 	 *
 	 */
-	@Test(expected = AssertionError.class)
+	@Test(expected = NullPointerException.class)
 	public void testDistanceNull() {
 		zero.getDistance(null);
 	}
@@ -101,15 +101,15 @@ public class SphericCoordinateTest {
 	/**
 	 *
 	 */
-	@Test(expected = AssertionError.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor1() {
-		new SphericCoordinate(-91.0D, 0D);
+		new SphericCoordinate(-92.0D, 0D);
 	}
 
 	/**
 	 *
 	 */
-	@Test(expected = AssertionError.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor2() {
 		new SphericCoordinate(0.0D, 180.1D);
 	}
@@ -117,7 +117,7 @@ public class SphericCoordinateTest {
 	/**
 	 *
 	 */
-	@Test(expected = AssertionError.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor3() {
 		new SphericCoordinate(0.0D, 0.0D, 0);
 	}

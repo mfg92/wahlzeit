@@ -35,7 +35,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public double getDistance(Coordinate otherCoordinate) {
-		assert otherCoordinate != null;
+		Objects.requireNonNull(otherCoordinate);
 
 		if (!(otherCoordinate instanceof AbstractCoordinate)) {
 			throw new IllegalArgumentException("Can only calculate distance for AbstractCoordinate classes");
@@ -54,7 +54,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * @methodtype get
 	 */
 	private double doGetDistance(AbstractCoordinate other) {
-		assert other != null;
+		Objects.requireNonNull(other);
 
 		double dx = getX() - other.getX();
 		double dy = getY() - other.getY();

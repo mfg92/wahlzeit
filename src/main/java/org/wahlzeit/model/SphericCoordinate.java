@@ -64,9 +64,16 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype constructor
 	 */
 	public SphericCoordinate(double latitude, double longitude, double radius) {
-		assert latitude <= 90.0D && latitude >= -90.0D : "latitude must be in range [-90,90]";
-		assert longitude <= 180.0D && longitude >= -180.0D : "longitude must be in range [-180,180]";
-		assert radius > 0.0D : "radius must be greater zero";
+		if(latitude > 90.0D || latitude < -90.0D) {
+			throw new IllegalArgumentException("latitude must be in range [-90,90]");
+		}
+		if(longitude > 180.0D || longitude < -180.0D) {
+			throw new IllegalArgumentException("longitude must be in range [-180,180]");
+		}
+		if(radius <= 0.0D){
+			throw new IllegalArgumentException("radius must be greater zero");
+		}
+		System.out.println("Whaaaaat");
 
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -76,11 +83,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 		assert this.longitude == longitude;
 		assert this.radius == radius;
 	}
-
-//	no assertClassInvariants needed because all fields are final
-//	private void assertClassInvariants(){
-//
-//	}
 
 	/**
 	 * @methodtype get

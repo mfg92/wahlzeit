@@ -46,11 +46,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		assert this.z == z;
 	}
 
-//	no assertClassInvariants needed because all fields are final
-//	private void assertClassInvariants(){
-//
-//	}
-
 	/**
 	 * @methodtype get
 	 */
@@ -89,7 +84,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		if (Double.compare(that.x, x) != 0) return false;
 		if (Double.compare(that.y, y) != 0) return false;
 		return Double.compare(that.z, z) == 0;
-
 	}
 
 	/**

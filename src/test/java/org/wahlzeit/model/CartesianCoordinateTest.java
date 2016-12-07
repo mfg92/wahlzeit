@@ -24,7 +24,7 @@ public class CartesianCoordinateTest {
 	/**
 	 *
 	 */
-	@Test(expected = AssertionError.class)
+	@Test(expected = NullPointerException.class)
 	public void testDistanceNull() {
 		doTestDistance(zero, null, 0.0D);
 	}
