@@ -27,7 +27,7 @@ public class CartesianCoordinateTest {
 	/**
 	 *
 	 */
-	@Test(expected = NullPointerException.class)
+	@Test(expected = Coordinate.CoordinateException.class)
 	public void testDistanceNull() throws Coordinate.CoordinateException {
 		doTestDistance(zero, null, 0.0D);
 	}

@@ -124,7 +124,7 @@ public class SphericCoordinateTest {
 	/**
 	 *
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = Coordinate.CoordinateException.class)
 	public void testConstructor3() throws Coordinate.CoordinateException {
 		new SphericCoordinate(0.0D, 0.0D, 0);
 	}
