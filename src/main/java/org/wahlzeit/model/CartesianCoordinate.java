@@ -36,14 +36,18 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * @param y
 	 * @param z
 	 */
-	public CartesianCoordinate(double x, double y, double z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public CartesianCoordinate(double x, double y, double z) throws CoordinateException {
+		try{
+			this.x = x;
+			this.y = y;
+			this.z = z;
 
-		assert this.x == x;
-		assert this.y == y;
-		assert this.z == z;
+			assert this.x == x;
+			assert this.y == y;
+			assert this.z == z;
+		} catch( Exception e){
+			throw new CoordinateException(e);
+		}
 	}
 
 	/**

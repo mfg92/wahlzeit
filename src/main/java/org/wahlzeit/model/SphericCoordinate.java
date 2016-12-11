@@ -42,7 +42,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	/**
 	 * @methodtype constructor
 	 */
-	private SphericCoordinate() {
+	private SphericCoordinate() throws CoordinateException {
 		this(0, 0);
 	}
 
@@ -53,7 +53,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @param longitude
 	 * @methodtype constructor
 	 */
-	public SphericCoordinate(double latitude, double longitude) {
+	public SphericCoordinate(double latitude, double longitude) throws CoordinateException {
 		this(latitude, longitude, EARTH_RADIUS);
 	}
 
@@ -63,25 +63,28 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @param radius    in meters
 	 * @methodtype constructor
 	 */
-	public SphericCoordinate(double latitude, double longitude, double radius) {
-		if(latitude > 90.0D || latitude < -90.0D) {
-			throw new IllegalArgumentException("latitude must be in range [-90,90]");
-		}
-		if(longitude > 180.0D || longitude < -180.0D) {
-			throw new IllegalArgumentException("longitude must be in range [-180,180]");
-		}
-		if(radius <= 0.0D){
-			throw new IllegalArgumentException("radius must be greater zero");
-		}
-		System.out.println("Whaaaaat");
+	public SphericCoordinate(double latitude, double longitude, double radius) throws CoordinateException {
+		try{
+			if(latitude > 90.0D || latitude < -90.0D) {
+				throw new IllegalArgumentException("latitude must be in range [-90,90]");
+			}
+			if(longitude > 180.0D || longitude < -180.0D) {
+				throw new IllegalArgumentException("longitude must be in range [-180,180]");
+			}
+			if(radius <= 0.0D){
+				throw new IllegalArgumentException("radius must be greater zero");
+			}
 
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.radius = radius;
+			this.latitude = latitude;
+			this.longitude = longitude;
+			this.radius = radius;
 
-		assert this.latitude == latitude;
-		assert this.longitude == longitude;
-		assert this.radius == radius;
+			assert this.latitude == latitude;
+			assert this.longitude == longitude;
+			assert this.radius == radius;
+		} catch( Exception e){
+			throw new CoordinateException(e);
+		}
 	}
 
 	/**

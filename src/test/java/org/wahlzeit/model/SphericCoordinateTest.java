@@ -42,9 +42,16 @@ public class SphericCoordinateTest {
 
 	/**
 	 *
+	 * @throws Coordinate.CoordinateException
+	 */
+	public SphericCoordinateTest() throws Coordinate.CoordinateException {
+	}
+
+	/**
+	 *
 	 */
 	@Test
-	public void testDistance() {
+	public void testDistance() throws Coordinate.CoordinateException {
 		Assert.assertEquals(EARTH_DIAMETER, northPole.getDistance(southPole), 1.0D);
 		Assert.assertEquals(0D, northPole.getDistance(northPole), 1.0D);
 		Assert.assertEquals(0D, northPole.getDistance(new SphericCoordinate(90D, 42D)), 1.0D);
@@ -56,7 +63,7 @@ public class SphericCoordinateTest {
 	 *
 	 */
 	@Test
-	public void testDistanceWithDifferentRadius() {
+	public void testDistanceWithDifferentRadius() throws Coordinate.CoordinateException {
 		float deltaRadius = 42;
 		Assert.assertEquals(deltaRadius,
 				zero.getDistance(new SphericCoordinate(zero.getLatitude(), zero.getLongitude(), zero.getRadius() + deltaRadius)),
@@ -66,8 +73,8 @@ public class SphericCoordinateTest {
 	/**
 	 *
 	 */
-	@Test(expected = NullPointerException.class)
-	public void testDistanceNull() {
+	@Test(expected = Coordinate.CoordinateException.class)
+	public void testDistanceNull() throws Coordinate.CoordinateException {
 		zero.getDistance(null);
 	}
 
@@ -75,7 +82,7 @@ public class SphericCoordinateTest {
 	 *
 	 */
 	@Test
-	public void testInteroperability() {
+	public void testInteroperability() throws Coordinate.CoordinateException {
 
 		Assert.assertEquals(zero.getRadius(),
 				zero.getDistance(new CartesianCoordinate(0.0, 0.0, 0.0)),
@@ -90,7 +97,7 @@ public class SphericCoordinateTest {
 	 *
 	 */
 	@Test()
-	public void testConstructor0() {
+	public void testConstructor0() throws Coordinate.CoordinateException {
 		double lat = 1.0D, lon = 2.0D, rad = 3.0D;
 		SphericCoordinate sc = new SphericCoordinate(lat, lon, rad);
 		Assert.assertEquals(lat, sc.getLatitude(), 0.0D);
@@ -101,16 +108,16 @@ public class SphericCoordinateTest {
 	/**
 	 *
 	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testConstructor1() {
+	@Test(expected = Coordinate.CoordinateException.class)
+	public void testConstructor1() throws Coordinate.CoordinateException {
 		new SphericCoordinate(-92.0D, 0D);
 	}
 
 	/**
 	 *
 	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testConstructor2() {
+	@Test(expected = Coordinate.CoordinateException.class)
+	public void testConstructor2() throws Coordinate.CoordinateException {
 		new SphericCoordinate(0.0D, 180.1D);
 	}
 
@@ -118,7 +125,7 @@ public class SphericCoordinateTest {
 	 *
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testConstructor3() {
+	public void testConstructor3() throws Coordinate.CoordinateException {
 		new SphericCoordinate(0.0D, 0.0D, 0);
 	}
 }

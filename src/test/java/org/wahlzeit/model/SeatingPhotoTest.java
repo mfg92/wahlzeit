@@ -31,8 +31,8 @@ public class SeatingPhotoTest {
 	/**
 	 *
 	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testSeatsCountSetterIllegalArgument() {
+	@Test(expected = SeatingPhoto.SeatingPhotoException.class)
+	public void testSeatsCountSetterIllegalArgument() throws SeatingPhoto.SeatingPhotoException {
 		SeatingPhoto photo = new SeatingPhoto();
 		photo.setSeatCount(-42);
 	}
@@ -41,7 +41,7 @@ public class SeatingPhotoTest {
 	 *
 	 */
     @Test
-    public void testSeatsCountSetterGetter() {
+    public void testSeatsCountSetterGetter() throws SeatingPhoto.SeatingPhotoException {
 		int seatCount = 42;
 		SeatingPhoto photo = new SeatingPhoto();
 		photo.setSeatCount(seatCount);

@@ -34,17 +34,21 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * @methodtype get
 	 */
 	@Override
-	public double getDistance(Coordinate otherCoordinate) {
-		Objects.requireNonNull(otherCoordinate);
+	public double getDistance(Coordinate otherCoordinate) throws CoordinateException {
+		try {
+			Objects.requireNonNull(otherCoordinate);
 
-		if (!(otherCoordinate instanceof AbstractCoordinate)) {
-			throw new IllegalArgumentException("Can only calculate distance for AbstractCoordinate classes");
+			if (!(otherCoordinate instanceof AbstractCoordinate)) {
+				throw new IllegalArgumentException("Can only calculate distance for AbstractCoordinate classes");
+			}
+
+			double result = doGetDistance((AbstractCoordinate) otherCoordinate);
+
+			assert result >= 0.0;
+			return result;
+		} catch( Exception e){
+			throw new CoordinateException(e);
 		}
-
-		double result = doGetDistance((AbstractCoordinate) otherCoordinate);
-
-		assert result >= 0.0;
-		return result;
 	}
 
 	/**

@@ -51,14 +51,41 @@ public class SeatingPhoto extends Photo {
 		return seatCount;
 	}
 
-	public void setSeatCount(int seatCount) {
-		if(seatCount < 0 && seatCount != UNKNOWN_SEAT_COUNT)
-			throw new IllegalArgumentException("Seat count has to in range [0,..Integer.MAX] " +
-					"or be eqauls to SeatingPhoto.UNKNOWN_SEAT_COUNT");
-		this.seatCount = seatCount;
+	public void setSeatCount(int seatCount) throws SeatingPhotoException {
+		try {
+			if (seatCount < 0 && seatCount != UNKNOWN_SEAT_COUNT)
+				throw new IllegalArgumentException("Seat count has to in range [0,..Integer.MAX] " +
+						"or be eqauls to SeatingPhoto.UNKNOWN_SEAT_COUNT");
+			this.seatCount = seatCount;
+		}catch(Exception e)
+		{
+			throw new SeatingPhotoException(e);
+		}
 	}
 
 	public boolean hasSeatCount(){
 		return getSeatCount() != UNKNOWN_SEAT_COUNT;
+	}
+
+
+	public static class SeatingPhotoException extends Exception{
+		public SeatingPhotoException() {
+		}
+
+		public SeatingPhotoException(String message) {
+			super(message);
+		}
+
+		public SeatingPhotoException(String message, Throwable cause) {
+			super(message, cause);
+		}
+
+		public SeatingPhotoException(Throwable cause) {
+			super(cause);
+		}
+
+		public SeatingPhotoException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+			super(message, cause, enableSuppression, writableStackTrace);
+		}
 	}
 }
