@@ -5,19 +5,19 @@ import org.junit.Test;
 
 public class CartesianCoordinateTest {
 
-	Coordinate zero = new CartesianCoordinate(0.0D, 0.0D, 0.0D);
-	Coordinate zeroXOne = new CartesianCoordinate(1.0D, 0.0D, 0.0D);
-	Coordinate zeroXMinusOne = new CartesianCoordinate(-1.0D, 0.0D, 0.0D);
-	Coordinate one = new CartesianCoordinate(1.0D, 1.0D, 1.0D);
+	Coordinate zero = CartesianCoordinate.get(0.0D, 0.0D, 0.0D);
+	Coordinate zeroXOne = CartesianCoordinate.get(1.0D, 0.0D, 0.0D);
+	Coordinate zeroXMinusOne = CartesianCoordinate.get(-1.0D, 0.0D, 0.0D);
+	Coordinate one = CartesianCoordinate.get(1.0D, 1.0D, 1.0D);
 
-	public CartesianCoordinateTest() throws Coordinate.CoordinateException {
+	public CartesianCoordinateTest() {
 	}
 
 	/**
 	 *
 	 */
 	@Test
-	public void testDistance() throws Coordinate.CoordinateException {
+	public void testDistance() {
 		doTestDistance(zero, zero, 0.0D);
 		doTestDistance(zero, zeroXOne, 1.0D);
 		doTestDistance(zero, zeroXMinusOne, 1.0D);
@@ -27,8 +27,8 @@ public class CartesianCoordinateTest {
 	/**
 	 *
 	 */
-	@Test(expected = Coordinate.CoordinateException.class)
-	public void testDistanceNull() throws Coordinate.CoordinateException {
+	@Test(expected = NullPointerException.class)
+	public void testDistanceNull() {
 		doTestDistance(zero, null, 0.0D);
 	}
 
@@ -37,7 +37,7 @@ public class CartesianCoordinateTest {
 	 * @param b
 	 * @param expected
 	 */
-	private void doTestDistance(Coordinate a, Coordinate b, double expected) throws Coordinate.CoordinateException {
+	private void doTestDistance(Coordinate a, Coordinate b, double expected) {
 		Assert.assertEquals(expected, a.getDistance(b), 0.0001D);
 		Assert.assertEquals(b.getDistance(a), a.getDistance(b), 0.0001D);
 	}
@@ -46,7 +46,7 @@ public class CartesianCoordinateTest {
 	 *
 	 */
 	@Test()
-	public void testInteroperability() throws Coordinate.CoordinateException {
+	public void testInteroperability() {
 		double radius = 100.0;
 		Assert.assertEquals(radius, zero.getDistance(new SphericCoordinate(0.0D, 0.0D, radius)), 0.1);
 	}
@@ -55,9 +55,9 @@ public class CartesianCoordinateTest {
 	 *
 	 */
 	@Test()
-	public void testConstructor0() throws Coordinate.CoordinateException {
+	public void testConstructor0() {
 		double x = 1.0D, y = 2.0D, z = 3.0D;
-		CartesianCoordinate sc = new CartesianCoordinate(x, y, z);
+		CartesianCoordinate sc = CartesianCoordinate.get(x, y, z);
 		Assert.assertEquals(x, sc.getX(), 0.0D);
 		Assert.assertEquals(y, sc.getY(), 0.0D);
 		Assert.assertEquals(z, sc.getZ(), 0.0D);
@@ -67,7 +67,7 @@ public class CartesianCoordinateTest {
 	 *
 	 */
 	@Test
-	public void testConstructor1() throws Coordinate.CoordinateException {
-		new CartesianCoordinate(0.0D, 0.0D, 0.0D);
+	public void testConstructor1() {
+		CartesianCoordinate.get(0.0D, 0.0D, 0.0D);
 	}
 }

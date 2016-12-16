@@ -21,10 +21,32 @@
 package org.wahlzeit.model;
 
 
+import org.wahlzeit.utils.ValueFactory;
+
 /**
  * A class that represents a polar coordinate on the earth.
  */
 public class SphericCoordinate extends AbstractCoordinate {
+
+	/**
+	 *
+	 */
+	private static final ValueFactory<SphericCoordinate> factory =
+			new ValueFactory<>(SphericCoordinate.class, Double.TYPE, Double.TYPE, Double.TYPE);
+
+	/**
+	 *
+	 */
+	public static SphericCoordinate get(double latitude, double longitude){
+		return get(latitude, longitude, EARTH_RADIUS);
+	}
+
+	/**
+	 *
+	 */
+	public static SphericCoordinate get(double latitude, double longitude, double radius){
+		return factory.getValueObject(latitude, longitude, radius);
+	}
 
 	/**
 	 * Radius of the earth in meters
@@ -42,7 +64,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	/**
 	 * @methodtype constructor
 	 */
-	private SphericCoordinate() throws CoordinateException {
+	private SphericCoordinate() {
 		this(0, 0);
 	}
 
@@ -53,7 +75,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @param longitude
 	 * @methodtype constructor
 	 */
-	public SphericCoordinate(double latitude, double longitude) throws CoordinateException {
+	protected SphericCoordinate(double latitude, double longitude) {
 		this(latitude, longitude, EARTH_RADIUS);
 	}
 
@@ -63,28 +85,24 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @param radius    in meters
 	 * @methodtype constructor
 	 */
-	public SphericCoordinate(double latitude, double longitude, double radius) throws CoordinateException {
-		try{
-			if(latitude > 90.0D || latitude < -90.0D) {
-				throw new IllegalArgumentException("latitude must be in range [-90,90]");
-			}
-			if(longitude > 180.0D || longitude < -180.0D) {
-				throw new IllegalArgumentException("longitude must be in range [-180,180]");
-			}
-			if(radius <= 0.0D){
-				throw new IllegalArgumentException("radius must be greater zero");
-			}
-
-			this.latitude = latitude;
-			this.longitude = longitude;
-			this.radius = radius;
-
-			assert this.latitude == latitude;
-			assert this.longitude == longitude;
-			assert this.radius == radius;
-		} catch( Exception e){
-			throw new CoordinateException(e);
+	protected SphericCoordinate(double latitude, double longitude, double radius) {
+		if(latitude > 90.0D || latitude < -90.0D) {
+			throw new IllegalArgumentException("latitude must be in range [-90,90]");
 		}
+		if(longitude > 180.0D || longitude < -180.0D) {
+			throw new IllegalArgumentException("longitude must be in range [-180,180]");
+		}
+		if(radius <= 0.0D){
+			throw new IllegalArgumentException("radius must be greater zero");
+		}
+
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.radius = radius;
+
+		assert this.latitude == latitude;
+		assert this.longitude == longitude;
+		assert this.radius == radius;
 	}
 
 	/**
@@ -132,36 +150,4 @@ public class SphericCoordinate extends AbstractCoordinate {
 		return radius * Math.sin(Math.toRadians(latitude));
 	}
 
-	/**
-	 * @param o
-	 * @return
-	 */
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof SphericCoordinate)) return false;
-
-		SphericCoordinate that = (SphericCoordinate) o;
-
-		if (Double.compare(that.latitude, latitude) != 0) return false;
-		if (Double.compare(that.longitude, longitude) != 0) return false;
-		return Double.compare(that.radius, radius) == 0;
-
-	}
-
-	/**
-	 * @return
-	 */
-	@Override
-	public int hashCode() {
-		int result;
-		long temp;
-		temp = Double.doubleToLongBits(latitude);
-		result = (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(longitude);
-		result = 31 * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(radius);
-		result = 31 * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
 }

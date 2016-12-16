@@ -27,6 +27,8 @@ import java.util.Objects;
  */
 public abstract class AbstractCoordinate implements Coordinate {
 
+	public static final double EQUALS_EPSILON  = 1e-5;
+
 	/**
 	 *
 	 * @param otherCoordinate
@@ -34,21 +36,17 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * @methodtype get
 	 */
 	@Override
-	public double getDistance(Coordinate otherCoordinate) throws CoordinateException {
-		try {
-			Objects.requireNonNull(otherCoordinate);
+	public double getDistance(Coordinate otherCoordinate) {
+		Objects.requireNonNull(otherCoordinate);
 
-			if (!(otherCoordinate instanceof AbstractCoordinate)) {
-				throw new IllegalArgumentException("Can only calculate distance for AbstractCoordinate classes");
-			}
-
-			double result = doGetDistance((AbstractCoordinate) otherCoordinate);
-
-			assert result >= 0.0;
-			return result;
-		} catch( Exception e){
-			throw new CoordinateException(e);
+		if (!(otherCoordinate instanceof AbstractCoordinate)) {
+			throw new IllegalArgumentException("Can only calculate distance for AbstractCoordinate classes");
 		}
+
+		double result = doGetDistance((AbstractCoordinate) otherCoordinate);
+
+		assert result >= 0.0;
+		return result;
 	}
 
 	/**
@@ -66,6 +64,35 @@ public abstract class AbstractCoordinate implements Coordinate {
 		double result = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
 		assert result >= 0.0;
+		return result;
+	}
+
+	/**
+	 * @param o
+	 * @return
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof AbstractCoordinate)) return false;
+
+		AbstractCoordinate that = (AbstractCoordinate) o;
+		return getDistance(that) <= EQUALS_EPSILON;
+	}
+
+	/**
+	 * @return
+	 */
+	@Override
+	public int hashCode() {
+		int result;
+		long temp;
+		temp = Double.doubleToLongBits(getX());
+		result = (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(getY());
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(getZ());
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 

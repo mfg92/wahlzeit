@@ -20,10 +20,27 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.ValueFactory;
+
 /**
  * A coordinate class for cartesian coordinates
  */
 public class CartesianCoordinate extends AbstractCoordinate {
+
+	/**
+	 *
+	 */
+	private static final ValueFactory<CartesianCoordinate> factory =
+			new ValueFactory<>(CartesianCoordinate.class, Double.TYPE, Double.TYPE, Double.TYPE);
+
+	/**
+	 *
+	 */
+	public static CartesianCoordinate get(double x, double y, double z){
+		return factory.getValueObject(x,y,z);
+	}
+
+
 
 	/**
 	 * in meters
@@ -36,18 +53,14 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * @param y
 	 * @param z
 	 */
-	public CartesianCoordinate(double x, double y, double z) throws CoordinateException {
-		try{
-			this.x = x;
-			this.y = y;
-			this.z = z;
+	protected CartesianCoordinate(double x, double y, double z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
 
-			assert this.x == x;
-			assert this.y == y;
-			assert this.z == z;
-		} catch( Exception e){
-			throw new CoordinateException(e);
-		}
+		assert this.x == x;
+		assert this.y == y;
+		assert this.z == z;
 	}
 
 	/**
@@ -72,37 +85,5 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	@Override
 	public double getZ() {
 		return z;
-	}
-
-	/**
-	 * @param o
-	 * @return
-	 */
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof CartesianCoordinate)) return false;
-
-		CartesianCoordinate that = (CartesianCoordinate) o;
-
-		if (Double.compare(that.x, x) != 0) return false;
-		if (Double.compare(that.y, y) != 0) return false;
-		return Double.compare(that.z, z) == 0;
-	}
-
-	/**
-	 * @return
-	 */
-	@Override
-	public int hashCode() {
-		int result;
-		long temp;
-		temp = Double.doubleToLongBits(x);
-		result = (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(y);
-		result = 31 * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(z);
-		result = 31 * result + (int) (temp ^ (temp >>> 32));
-		return result;
 	}
 }
