@@ -54,6 +54,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * @param z
 	 */
 	protected CartesianCoordinate(double x, double y, double z) {
+		assertValidDouble(x);
+		assertValidDouble(y);
+		assertValidDouble(z);
+
 		this.x = x;
 		this.y = y;
 		this.z = z;

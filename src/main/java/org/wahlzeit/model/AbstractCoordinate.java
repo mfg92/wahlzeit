@@ -67,6 +67,12 @@ public abstract class AbstractCoordinate implements Coordinate {
 		return result;
 	}
 
+	protected void assertValidDouble(double d){
+		if(Double.isNaN(d)){
+			throw new IllegalArgumentException("Only non NaN doubles are allowed");
+		}
+	}
+
 	/**
 	 * @param o
 	 * @return

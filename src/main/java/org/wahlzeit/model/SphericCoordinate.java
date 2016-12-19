@@ -86,6 +86,10 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype constructor
 	 */
 	protected SphericCoordinate(double latitude, double longitude, double radius) {
+		assertValidDouble(latitude);
+		assertValidDouble(longitude);
+		assertValidDouble(radius);
+
 		if(latitude > 90.0D || latitude < -90.0D) {
 			throw new IllegalArgumentException("latitude must be in range [-90,90]");
 		}
