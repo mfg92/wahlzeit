@@ -27,22 +27,17 @@ import org.wahlzeit.model.persistence.ImageStorage;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.services.ObjectManager;
 import org.wahlzeit.services.Persistent;
+import org.wahlzeit.utils.PatternInstance;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
  * A photo manager provides access to and manages photos.
  */
+@PatternInstance(patternName = "Singleton", participants = {"PhotoManager"} )
 public abstract class PhotoManager extends ObjectManager {
 
 	private static final Logger log = Logger.getLogger(PhotoManager.class.getName());

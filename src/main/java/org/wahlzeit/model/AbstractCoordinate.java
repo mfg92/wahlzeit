@@ -20,11 +20,14 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.PatternInstance;
+
 import java.util.Objects;
 
 /**
  * An abstract class for coordinates.
  */
+@PatternInstance(patternName = "Template Method", participants = {"AbstractCoordinate", "CartesianCoordinate", "SphericCoordinate"} )
 public abstract class AbstractCoordinate implements Coordinate {
 
 	public static final double EQUALS_EPSILON  = 1e-5;

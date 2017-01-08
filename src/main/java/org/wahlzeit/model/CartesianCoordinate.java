@@ -20,11 +20,13 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.PatternInstance;
 import org.wahlzeit.utils.ValueFactory;
 
 /**
  * A coordinate class for cartesian coordinates
  */
+@PatternInstance(patternName = "Value Object", participants = {"CartesianCoordinate"} )
 public class CartesianCoordinate extends AbstractCoordinate {
 
 	/**
@@ -36,6 +38,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	/**
 	 *
 	 */
+	@PatternInstance(patternName = "Factory Method", participants = {"CartesianCoordinate"} )
 	public static CartesianCoordinate get(double x, double y, double z){
 		return factory.getValueObject(x,y,z);
 	}
