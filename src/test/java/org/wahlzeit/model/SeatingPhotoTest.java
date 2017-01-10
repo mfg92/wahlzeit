@@ -20,33 +20,12 @@
 
 package org.wahlzeit.model;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * Test cases for the SeatingPhoto class.
  */
 public class SeatingPhotoTest {
-
-	/**
-	 *
-	 */
-	@Test(expected = SeatingPhoto.SeatingPhotoException.class)
-	public void testSeatsCountSetterIllegalArgument() throws SeatingPhoto.SeatingPhotoException {
-		SeatingPhoto photo = new SeatingPhoto();
-		photo.setSeatCount(-42);
-	}
-
-	/**
-	 *
-	 */
-    @Test
-    public void testSeatsCountSetterGetter() throws SeatingPhoto.SeatingPhotoException {
-		int seatCount = 42;
-		SeatingPhoto photo = new SeatingPhoto();
-		photo.setSeatCount(seatCount);
-		Assert.assertEquals(seatCount, photo.getSeatCount());
-    }
 
     /**
      *

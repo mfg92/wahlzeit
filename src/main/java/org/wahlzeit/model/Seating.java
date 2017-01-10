@@ -20,32 +20,37 @@
 
 package org.wahlzeit.model;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.wahlzeit.model.persistence.PersistenceTestSuite;
-
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        PersistenceTestSuite.class,
-        AccessRightsTest.class,
-        SphericCoordinateTest.class,
-        CartesianCoordinateTest.class,
-        FlagReasonTest.class,
-        GenderTest.class,
-        GuestTest.class,
-        PhotoFilterTest.class,
-		SeatingManagerTest.class,
-		SeatingPhotoFactoryTest.class,
-		SeatingPhotoManagerTest.class,
-		SeatingPhotoTest.class,
-        TagsTest.class,
-        UserStatusTest.class,
-        ValueTest.class
-})
-
-
 /**
  *
  */
-public class ModelTestSuite {
+public class Seating {
+
+	/**
+	 *
+	 */
+	private SeatingType type;
+
+	Seating(SeatingType type) {
+		this.type = type;
+	}
+
+	public SeatingType getType(){
+		return type;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public int getSeatCount() {
+		return type.getSeatCount();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public String getTypeName() {
+		return type.getTypeName();
+	}
 }
