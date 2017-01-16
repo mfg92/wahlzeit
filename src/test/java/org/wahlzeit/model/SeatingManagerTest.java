@@ -67,10 +67,12 @@ public class SeatingManagerTest {
 
 	@Test
 	public void testCreateSeating(){
-		Seating seating = manager.createSeating(TEST_SEATING_TYPE);
+		Seating.SeatingCondition condition = Seating.SeatingCondition.New;
+		Seating seating = manager.createSeating(TEST_SEATING_TYPE, condition);
 		Assert.assertNotNull(seating);
 		Assert.assertNotNull(seating.getType());
 		Assert.assertEquals(seating.getType(), manager.getSeatingType(TEST_SEATING_TYPE));
+		Assert.assertEquals(seating.getCondition(), condition);
 	}
 
 }

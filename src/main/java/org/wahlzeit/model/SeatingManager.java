@@ -65,9 +65,9 @@ public class SeatingManager extends ObjectManager {
 	 * @param typeName
 	 * @return
 	 */
-	public Seating createSeating(String typeName){
+	public Seating createSeating(String typeName, Seating.SeatingCondition condition){
 		SeatingType type = getSeatingType(typeName);
-		Seating seating = type.createInstance();
+		Seating seating = type.createInstance(condition);
 		allSeatings.add(seating);
 		return seating;
 	}
@@ -94,7 +94,7 @@ public class SeatingManager extends ObjectManager {
 	 * @return
 	 */
 	public SeatingType getSeatingType(String typeName) {
-		SeatingType type = seatingTypeMap.get(typeName);
+		SeatingType type = doGetSeatingType(typeName);
 		if(type == null){
 			throw new RuntimeException(String.format("Unknown SeatingType %s.", typeName));
 		}

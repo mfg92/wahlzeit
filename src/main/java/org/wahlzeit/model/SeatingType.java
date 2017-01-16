@@ -70,8 +70,8 @@ public class SeatingType {
 	 *
 	 * @return
 	 */
-	public Seating createInstance(){
-		return  new Seating(this);
+	public Seating createInstance(Seating.SeatingCondition condition){
+		return  new Seating(this, condition);
 	}
 
 	/**

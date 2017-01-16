@@ -30,12 +30,41 @@ public class Seating {
 	 */
 	private SeatingType type;
 
-	Seating(SeatingType type) {
-		this.type = type;
+	/**
+	 *
+	 */
+	private SeatingCondition condition;
+
+	/**
+	 *
+	 */
+	public enum SeatingCondition{
+		New, Acceptable, Rusted, Destroyed
 	}
 
+	/**
+	 *
+	 * @param type
+	 */
+	Seating(SeatingType type, SeatingCondition condition) {
+		this.type = type;
+		this.condition = condition;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
 	public SeatingType getType(){
 		return type;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public String getTypeName() {
+		return type.getTypeName();
 	}
 
 	/**
@@ -50,7 +79,7 @@ public class Seating {
 	 *
 	 * @return
 	 */
-	public String getTypeName() {
-		return type.getTypeName();
+	public SeatingCondition getCondition() {
+		return condition;
 	}
 }
